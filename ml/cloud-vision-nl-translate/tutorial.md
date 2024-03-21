@@ -12,7 +12,7 @@ What you'll learn:
 * Using the Translation API to translate text from your image
 * Using the Natural Language API to analyze the text
 
-![Some of the ML APIs](https://storage.googleapis.com/aju-dev-demos-codelabs/images/tutorial_mlapi_initial_image_sm.png)
+![Some of the ML APIs](https://storage.googleapis.com/cloud-samples-data/vertex-ai-vision/cloud_vision_nl_translate/images/tutorial_mlapi_initial_image_sm.png)
 
 **Time to complete**: About 30 minutes
 
@@ -44,15 +44,15 @@ To create an API key, navigate to:
 
 **APIs & services > Credentials** in the [Cloud Console](https://console.cloud.google.com/):
 
-![apis_and_services](https://storage.googleapis.com/aju-dev-demos-codelabs/images/apis_and_services.png)
+![apis_and_services](https://storage.googleapis.com/cloud-samples-data/vertex-ai-vision/cloud_vision_nl_translate/images/apis_and_services.png)
 
 Then click __Create credentials__:
 
-![create_credentials1](https://storage.googleapis.com/aju-dev-demos-codelabs/images/create_credentials1.png)
+![create_credentials1](https://storage.googleapis.com/cloud-samples-data/vertex-ai-vision/cloud_vision_nl_translate/images/create_credentials1.png)
 
 In the drop-down menu, select __API key__:
 
-![create_credentials2](https://storage.googleapis.com/aju-dev-demos-codelabs/images/create_credentials2.png)
+![create_credentials2](https://storage.googleapis.com/cloud-samples-data/vertex-ai-vision/cloud_vision_nl_translate/images/create_credentials2.png)
 
 Next, copy the key you just generated. Click __Close__.
 
@@ -82,11 +82,11 @@ cd ml/cloud-vision-nl-translate
 
 You'll remain in this directory for the rest of the tutorial.
 
-We've uploaded a picture of a French sign to this Google Cloud Storage 
-URL, and made it public: `gs://aju-dev-demos-codelabs/images/french_sign.png`.
+We've uploaded a picture of a French sign to this Google Cloud Storage
+URL, and made it public: `gs://cloud-samples-data/vertex-ai-vision/cloud_vision_nl_translate/images/french_sign.png`.
 The sign looks like this:
 
-![french_sign](https://storage.googleapis.com/aju-dev-demos-codelabs/images/french_sign.png)
+![french_sign](https://storage.googleapis.com/cloud-samples-data/vertex-ai-vision/cloud_vision_nl_translate/images/french_sign.png)
 
 
 You'll use that URL to form a JSON request to analyze the photo. In particular, you're going to use
@@ -104,8 +104,8 @@ It contains the following request:
       {
         "image": {
           "source": {
-              "gcsImageUri": "gs://aju-dev-demos-codelabs/images/french_sign.png"
-          } 
+              "gcsImageUri": "gs://cloud-samples-data/vertex-ai-vision/cloud_vision_nl_translate/images/french_sign.png"
+          }
         },
         "features": [
           {
@@ -209,7 +209,7 @@ The OCR method is able to extract lots of text from our image, cool! Let's break
 
 > **Note**: The Vision API also has a `DOCUMENT_TEXT_DETECTION` feature optimized for images with more text. This response includes additional information and breaks text down into page, blocks, paragraphs, and words.
 
-Unless you speak French you probably don't know what this says. The next step is translation. 
+Unless you speak French you probably don't know what this says. The next step is translation.
 
 Run the following `curl` command to save the response to an `ocr-response.json` file so it can be referenced later:
 
@@ -235,7 +235,7 @@ It should look like this:
 }
 ```
 
-`q` is where you'll pass the string to translate. 
+`q` is where you'll pass the string to translate.
 
 
 Run the following command in Cloud Shell to extract the image text from the previous step and update `translation-request.json`, in one command:
@@ -273,14 +273,14 @@ Awesome, you can understand what the sign said!  The result should look like thi
 
 In the response, `translatedText` contains the resulting translation, and `detectedSourceLanguage` is `fr`, the ISO language code for French. The Translation API supports 100+ languages, all of which are listed  [here](https://cloud.google.com/translate/docs/languages).
 
-In addition to translating the text from our image, you might want to do more analysis on it. That's where the Natural Language API comes in handy. 
+In addition to translating the text from our image, you might want to do more analysis on it. That's where the Natural Language API comes in handy.
 
 Onward to the next step, where we'll analyze the translated text using the Natural Language API.
 
 ## Analyzing our image's text with the Natural Language API
 
 
-The Natural Language API helps us understand text by extracting entities, analyzing sentiment and syntax, and classifying text into categories. You can use the `analyzeEntities` method to see what entities the Natural Language API can find in the text from your image. 
+The Natural Language API helps us understand text by extracting entities, analyzing sentiment and syntax, and classifying text into categories. You can use the `analyzeEntities` method to see what entities the Natural Language API can find in the text from your image.
 
 Bring up the `nl-request.json` file
 <walkthrough-editor-open-file filePath="cloud-shell-tutorials/ml/cloud-vision-nl-translate/nl-request.json">in the text editor</walkthrough-editor-open-file>.
@@ -311,7 +311,7 @@ Run the following bash command in Cloud Shell to copy the translated text into t
 STR=$(jq .data.translations[0].translatedText  translation-response.json) && STR="${STR//\"}" && sed -i "s|your_text_here|$STR|g" nl-request.json
 ```
 
-The `nl-request.json` file now contains the translated English text from the original image. Time to analyze it! 
+The `nl-request.json` file now contains the translated English text from the original image. Time to analyze it!
 
 Call the `analyzeEntities` endpoint of the Natural Language API with this `curl` request:
 
